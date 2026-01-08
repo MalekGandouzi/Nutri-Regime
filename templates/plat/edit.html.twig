@@ -1,0 +1,57 @@
+{# templates/plat/edit.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le plat
+{% endblock %}
+
+{% block body %}
+	<div class="container py-4">
+		<div class="row justify-content-center">
+			<div class="col-lg-8">
+
+				<div class="mb-3 d-flex align-items-center gap-2">
+					<a href="{{ path('admin_plat_list') }}" class="btn btn-outline-secondary btn-sm">
+						<i class="bi bi-arrow-left"></i>
+					</a>
+					<h1 class="h4 mb-0">
+						<i class="bi bi-pencil-square me-2 text-primary"></i>
+						Modifier le plat :
+						<span class="text-success">{{ plat.nomPlat }}</span>
+					</h1>
+				</div>
+
+				<div class="card nutri-card">
+					<div class="card-header nutri-card-header d-flex align-items-center justify-content-between">
+						<div>
+							<h2 class="h5 mb-1">Ajuster la recette</h2>
+							<p class="small text-muted mb-0">
+								Tu peux adapter le coût, les ingrédients ou l’image pour améliorer le plat.
+							</p>
+						</div>
+						<i class="bi bi-egg-fried fs-3 text-primary"></i>
+					</div>
+					<div class="card-body">
+
+						{% if plat.image %}
+							<div class="mb-4 text-center">
+								<p class="text-muted small mb-2">Image actuelle du plat :</p>
+								<img src="{{ asset('uploads/' ~ plat.image) }}" alt="{{ plat.nomPlat }}" class="img-thumbnail shadow-sm" style="max-height: 200px; border-radius: 12px; object-fit: cover;">
+							</div>
+						{% endif %}
+
+						{{ form_start(form) }}
+
+						{% include 'plat/_form.html.twig' with {
+                            form: form,
+                            button_label: 'Mettre à jour'
+                        } %}
+
+						{{ form_end(form) }}
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+{% endblock %}

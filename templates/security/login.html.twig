@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion
+{% endblock %}
+
+{% block body %}
+
+	<style>
+		body {
+			background: linear-gradient(135deg, #c3f6d6 0%, #98e0b5 50%, #7ecfa3 100%);
+			min-height: 100vh;
+		}
+
+		.login-card {
+			border-radius: 18px;
+			overflow: hidden;
+			box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+			backdrop-filter: blur(10px);
+		}
+
+		.login-header {
+			background: rgba(255, 255, 255, 0.85);
+			text-align: center;
+			padding: 25px 15px;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+		}
+
+		.login-header h2 {
+			font-weight: 700;
+			color: #2b6645;
+		}
+
+		.login-body {
+			background: rgba(255, 255, 255, 0.92);
+			padding: 30px;
+		}
+
+		.btn-login {
+			background-color: #2b6645;
+			color: white;
+			font-weight: 600;
+			border-radius: 10px;
+		}
+
+		.btn-login:hover {
+			background-color: #244f38;
+		}
+
+		.login-input {
+			border-radius: 10px;
+			padding: 10px 12px;
+			border: 1px solid #b5d8c6;
+		}
+
+		.login-logo {
+			width: 70px;
+			height: 70px;
+			object-fit: cover;
+			border-radius: 50%;
+			margin-bottom: 10px;
+			border: 3px solid #2b6645;
+			background: white;
+		}
+	</style>
+
+
+	<div class="d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+		<div class="col-11 col-sm-8 col-md-5 col-lg-4">
+
+			<div class="login-card">
+
+				<div class="login-header">
+					<img src="https://cdn-icons-png.flaticon.com/512/4697/4697260.png" class="login-logo" alt="logo">
+					<h2>Admin Panel</h2>
+					<p class="text-muted mb-0">Accédez à votre espace sécurisé</p>
+				</div>
+
+				<div class="login-body">
+
+					{% if error %}
+						<div class="alert alert-danger py-2 small text-center">
+							<i class="bi bi-exclamation-triangle me-1"></i>
+							{{ error }}
+						</div>
+					{% endif %}
+
+					<form method="post">
+
+						<div class="mb-3">
+							<label class="form-label">Nom d'utilisateur</label>
+							<input type="text" name="username" class="form-control login-input" placeholder="admin" required>
+						</div>
+
+						<div class="mb-4">
+							<label class="form-label">Mot de passe</label>
+							<input type="password" name="password" class="form-control login-input" placeholder="••••••••" required>
+						</div>
+
+						<button class="btn btn-login w-100 py-2">
+							<i class="bi bi-box-arrow-in-right me-1"></i>
+							Se connecter
+						</button>
+					</form>
+
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+
+{% endblock %}

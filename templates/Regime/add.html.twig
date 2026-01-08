@@ -1,0 +1,50 @@
+{# templates/regime/add.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un régime
+{% endblock %}
+
+{% block body %}
+	<div class="container py-4">
+		<div class="row justify-content-center">
+			<div class="col-lg-8">
+				<div class="mb-3 d-flex align-items-center gap-2">
+					<a href="{{ path('admin_regime_list') }}" class="btn btn-outline-secondary btn-sm">
+						<i class="bi bi-arrow-left"></i>
+					</a>
+					<h1 class="h4 mb-0">
+						<i class="bi bi-clipboard2-plus me-2 text-success"></i>
+						Nouveau régime nutritionnel
+					</h1>
+				</div>
+
+				<div class="card nutri-card">
+					<div class="card-header nutri-card-header d-flex align-items-center justify-content-between">
+						<div>
+							<h2 class="h5 mb-1">Paramètres du régime</h2>
+							<p class="small text-muted mb-0">
+								Choisis un nom motivant, une durée réaliste et un type adapté à l’objectif.
+							</p>
+						</div>
+						<i class="bi bi-calendar-heart fs-3 text-success"></i>
+					</div>
+					<div
+						class="card-body">
+
+						
+						{{ form_start(form) }}
+
+						{% include 'regime/_form.html.twig' with {
+                            form: form,
+                            button_label: 'Créer le régime'
+                        } %}
+
+						{{ form_end(form) }}
+					
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

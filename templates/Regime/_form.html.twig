@@ -1,0 +1,30 @@
+{# templates/regime/_form.html.twig #}
+
+<div class="row g-3">
+	<div class="col-md-6">
+		{{ form_row(form.nomRegime) }}
+	</div>
+	<div class="col-md-3">
+		{{ form_row(form.duree) }}
+	</div>
+	<div class="col-md-3">
+		{{ form_row(form.type) }}
+	</div>
+
+	<div
+		class="col-12">
+		{# champ upload image #}
+		{{ form_row(form.imageFile) }}
+	</div>
+</div>
+
+<div class="mt-4 d-flex gap-2">
+	<button class="btn btn-nutri-main">
+		<i class="bi bi-check2-circle me-1"></i>
+		{{ button_label|default('Enregistrer') }}
+	</button>
+	<a href="{{ path('admin_regime_list') }}" class="btn btn-outline-secondary">
+		<i class="bi bi-arrow-left-circle me-1"></i>
+		Retour à la liste
+	</a>
+</div>

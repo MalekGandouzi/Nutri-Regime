@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Régime
+	{{ regime.nomRegime }}
+{% endblock %}
+
+{% block body %}
+	<div
+		class="container py-4">
+
+		{# HERO DU REGIME #}
+		<section class="hero-banner p-4 p-md-5 mb-4">
+			<div class="row align-items-center hero-content">
+				<div class="col-md-7">
+					<div class="nutri-pill mb-2">
+						<i class="bi bi-clipboard2-heart me-1"></i>
+						Détail du régime
+					</div>
+					<h1 class="h4 h-md-3 fw-bold mb-3">
+						{{ regime.nomRegime }}
+					</h1>
+
+					<p class="mb-2">
+						<span class="badge nutri-badge nutri-type me-1">
+							<i class="bi bi-heart-pulse me-1"></i>
+							{{ regime.type }}
+						</span>
+						<span class="badge nutri-badge nutri-duration">
+							<i class="bi bi-clock-history me-1"></i>
+							{{ regime.duree }}
+							jours
+						</span>
+					</p>
+
+					<p class="small text-muted mb-3">
+						Découvrez les plats associés à ce régime, avec leur coût, leurs calories et leurs ingrédients.
+					</p>
+
+					<a href="{{ path('admin_regime_list') }}" class="btn btn-outline-light btn-sm">
+						<i class="bi bi-arrow-left-circle me-1"></i>
+						Retour aux régimes
+					</a>
+				</div>
+
+				<div class="col-md-5 mt-3 mt-md-0 text-center">
+					{% set imageUrl = regime.image
+                    ? asset('uploads/' ~ regime.image)
+                    : 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=700&q=80'
+                %}
+					<img src="{{ imageUrl }}" alt="{{ regime.nomRegime }}" class="img-fluid rounded-4 shadow-sm border border-white">
+				</div>
+			</div>
+		</section>
+
+		{# LISTE DES PLATS DU REGIME #}
+		<section>
+			<div class="d-flex justify-content-between align-items-center mb-3">
+				<h2 class="h5 mb-0">
+					<i class="bi bi-bowl-salad me-2"></i>
+					Plats de ce régime ({{ plats|length }})
+				</h2>
+				<a href="{{ path('admin_plat_add') }}" class="btn btn-sm btn-nutri-main">
+					<i class="bi bi-plus-circle me-1"></i>
+					Ajouter un plat
+				</a>
+			</div>
+
+			{% if plats is empty %}
+				<div class="alert alert-light border d-flex align-items-center" role="alert">
+					<i class="bi bi-emoji-frown me-2 fs-4"></i>
+					<div>
+						Aucun plat n’est encore associé à ce régime.
+						<a href="{{ path('admin_plat_add') }}" class="fw-semibold text-success">
+							Ajouter un premier plat
+						</a>.
+					</div>
+				</div>
+			{% else %}
+				<div class="row g-4">
+					{% for plat in plats %}
+						<div class="col-12 col-md-6 col-lg-4 d-flex">
+							<div class="card nutri-card w-100 h-100">
+
+								{% set imageUrl = plat.image
+                                ? asset('uploads/' ~ plat.image)
+                                : 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80'
+                            %}
+
+								<img src="{{ imageUrl }}" class="card-img-top" alt="{{ plat.nomPlat }}" style="height: 200px; object-fit: cover;">
+
+								<div class="card-body d-flex flex-column">
+									<h5 class="card-title mb-1">{{ plat.nomPlat }}</h5>
+
+									<p class="text-muted small mb-1">
+										<i class="bi bi-cash-stack me-1"></i>
+										{{ plat.cout }}
+										TND
+									</p>
+
+									<p class="text-muted small mb-2">
+										<i class="bi bi-fire text-danger me-1"></i>
+										{{ plat.nbrCalories }}
+										kcal
+									</p>
+
+									<p class="small text-muted flex-grow-1">
+										{{ plat.ingredients|slice(0, 90) ~ (plat.ingredients|length > 90 ? '...' : '') }}
+									</p>
+
+									<div class="d-flex justify-content-between align-items-center mt-auto">
+										<div class="d-flex gap-1">
+											<a href="{{ path('admin_plat_show', {id: plat.id}) }}" class="btn btn-sm btn-outline-secondary">
+												<i class="bi bi-eye me-1"></i>
+												Détails
+											</a>
+											<a href="{{ path('admin_plat_edit_all', {id: plat.id}) }}" class="btn btn-sm btn-outline-primary">
+												<i class="bi bi-pencil-square me-1"></i>
+											</a>
+										</div>
+										<span class="nutri-pill">
+											<i class="bi bi-activity"></i>
+											{{ plat.nbrCalories }}
+											kcal
+										</span>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			{% endif %}
+		</section>
+	</div>
+{% endblock %}

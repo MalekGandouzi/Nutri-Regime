@@ -1,0 +1,144 @@
+{# templates/regime/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Régimes nutritionnels
+{% endblock %}
+
+{% block body %}
+	<div class="container py-4">
+
+
+		<section class="hero-banner p-4 p-md-5 mb-4">
+			<div class="row align-items-center hero-content">
+				<div class="col-md-7">
+					<div class="nutri-pill mb-2">
+						<i class="bi bi-activity"></i>
+						Tableau de bord des régimes
+					</div>
+					<h1 class="display-6 fw-bold mb-3">
+						Construis des
+						<span style="color: var(--nutri-green)">régimes équilibrés</span><br>
+						comme un·e vrai·e nutritionniste.
+					</h1>
+					<p class="lead mb-4">
+						Gère différents régimes (perte de poids, prise de masse, bien-être) et associe
+																																				                    des plats sains et colorés. Une UI fun pour un projet sérieux.
+					</p>
+					<div class="d-flex flex-wrap gap-2">
+						<a href="{{ path('admin_regime_add') }}" class="btn btn-nutri-main btn-lg">
+							<i class="bi bi-plus-circle me-1"></i>
+							Créer un nouveau régime
+						</a>
+						<span class="nutri-pill">
+							<i class="bi bi-fire"></i>
+							{{ regimes|length }}
+							régime(s) configuré(s)
+						</span>
+					</div>
+				</div>
+				<div class="col-md-5 text-center mt-4 mt-md-0">
+
+					<img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=700&q=80" alt="Healthy food" class="img-fluid rounded-4 shadow-sm border border-white">
+				</div>
+			</div>
+		</section>
+
+
+		<section>
+			<div class="d-flex justify-content-between align-items-center mb-3">
+				<h2 class="h4 mb-0">
+					<i class="bi bi-clipboard2-heart me-2"></i>
+					Mes régimes
+				</h2>
+				<a href="{{ path('admin_regime_add') }}" class="btn btn-outline-success btn-sm">
+					<i class="bi bi-plus-lg me-1"></i>
+					Ajouter
+				</a>
+			</div>
+
+			{% if regimes is empty %}
+				<div class="alert alert-light border d-flex align-items-center" role="alert">
+					<i class="bi bi-emoji-neutral me-2 fs-4"></i>
+					<div>
+						Aucun régime pour le moment. Commence par en créer un :
+						<a href="{{ path('admin_regime_add') }}" class="fw-semibold text-success">ajouter un régime</a>.
+					</div>
+				</div>
+			{% else %}
+				<div class="row g-4">
+					{% for regime in regimes %}
+<div class="col-12 col-md-6 col-lg-4 d-flex">
+	<div
+		class="card nutri-card w-100 h-100">
+
+		{# 👉 Tout l’intérieur de la carte (image + texte) est cliquable #}
+		<a href="{{ path('admin_regime_show', {id: regime.id}) }}" class="text-decoration-none text-dark d-flex flex-column h-100">
+
+			{% set imageUrl = regime.image
+                ? asset('uploads/' ~ regime.image)
+                : 'https://images.unsplash.com/photo-1514996937319-344454492b37?auto=format&fit=crop&w=900&q=80'
+            %}
+
+			<div class="position-relative">
+				<img src="{{ imageUrl }}" class="card-img-top" alt="{{ regime.nomRegime }}" style="height: 200px; object-fit: cover;">
+
+				<span class="badge bg-white text-success position-absolute top-0 start-0 m-2 nutri-badge">
+					<i class="bi bi-heart-pulse me-1"></i>
+					{{ regime.type }}
+				</span>
+
+				<span class="badge bg-dark text-white position-absolute bottom-0 end-0 m-2 nutri-badge">
+					<i class="bi bi-eye me-1"></i>
+					Voir les plats
+				</span>
+			</div>
+
+			<div class="card-body d-flex flex-column">
+				<h5 class="card-title mb-1">{{ regime.nomRegime }}</h5>
+				<p class="text-muted mb-2">
+					<i class="bi bi-clock-history me-1"></i>
+					Durée :
+					<strong>{{ regime.duree }}
+						jours</strong>
+				</p>
+				<p class="small text-muted mb-3 flex-grow-1">
+					Régime axé sur
+					{{ regime.type|lower }}, avec des plats équilibrés et colorés pour la santé globale.
+				</p>
+
+				<div class="d-flex justify-content-between align-items-center mt-auto">
+					<span class="nutri-pill">
+						<i class="bi bi-bowl-salad"></i>
+						{{ regime.plats|length }}
+						plat(s)
+					</span>
+				</div>
+			</div>
+		</a>
+
+		{# zone actions admin en bas de la carte #}
+		<div class="card-footer d-flex justify-content-between align-items-center">
+			<div class="d-flex gap-1">
+				<a href="{{ path('admin_regime_edit_all', {id: regime.id}) }}" class="btn btn-sm btn-outline-primary">
+					<i class="bi bi-pencil-square me-1"></i>
+					Modifier
+				</a>
+
+				<a href="{{ path('admin_regime_delete', {id: regime.id}) }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Supprimer ce régime ?');">
+					<i class="bi bi-trash3 me-1"></i>
+				</a>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+					{% endfor %}
+				</div>
+
+
+			{% endif %}
+		</section>
+	</div>
+{% endblock %}
